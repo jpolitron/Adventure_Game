@@ -1,107 +1,95 @@
 import time
 import random
 
-#function that adds 2 seconds in between every piece of text 
 def print_pause(message):
 	print(message)
-	time.sleep(2)
+	time.sleep(1)
 
-def library():
-	print_pause("You endup back to the library it's night and everyone's gone")
-	print_pause("Enter 1 to exit door. \n")
-	print_pause("Enter 2 go back to the country side kitchen.\n")
-	choice = input("Please enter 1 or 2\n")
-
-	valid=True
-	while valid == True:
-		if int(choice) == 1:
-			print_pause("You exit the library and go home\n")
-			play_game()
-			valid=False
-		elif int(choice)== 2:
-			front_door()
-			valid=False
-		else:
-			choice=input("Please enter 1 or 2\n")
-			
-
-def front_door():
-	print_pause("You open the front door and infront of you is a corn field across the street you notice\n")
-	print_pause("BLACK FIGURE STANDING THERE AND THEN IT STARTS RUNNING TOWARDS YOU!!!!\n")
-	print_pause("You put salt along the door to protect yourself from this figure you run towards the porch\n")
-	print_pause("Enter 1 to get into the car infront of you and escape\n")
-	print_pause("Enter 2 to go outside and look around\n")
-	choice=input("Please enter 1 or 2\n")
-
-#repeated code with slight difference see if you can add this into a function 
-	valid=True
-	while valid==True:
-		if int(choice)==1:
-			car()
-			valid=False
-		elif int(choice)==2:
-			go_outside()
-			valid=False
-		else:
-			choice=input("Please enter 1 or 2\n")
-			
-
-def car():
-	print_pause("You see the figure circle around and it doesn't seem to notice you\n")
-	print_pause("You get out safely and beat the game CONGRATULATIONS!\n")
-	play_game()
+def intro():
+	print_pause("You are studying for big math test in your school library.\n")
+	print_pause("You leave the room to go to the restroom once you open the restroom door you endup in a country sidehouse kitchen it is dark\n")
 
 
-def go_outside():
-	print_pause("You look around and don't see it anywhere it then comes out of the shadows and gets you\n")
-	play_game()
+def front_door(items,killer):
+	print_pause("You open the front door and infront of you is a huge corn field across the street.")
+	print_pause("You notice a {} standing there suddenly" .format(killer))
+	print_pause("it starts running towards you!!!")
+	
+	if "heavy duty chain" in items:
+		print_pause("You close the door and lock it")
+		move_around(items,killer)
+	else:
+		print_pause("The {} gets you".format(killer))
+		print_pause("game over")
+		play_again()
 
-"""
+def kitchen(items,killer):
+	print_pause("The kitchen is dark and no one is home you are trying to figure out how you ended up in one place when going through the bathroom door you see the lock on a table and save it for later")
+	items.append("heavy duty chain")
+	if "car keys" in items:
+		print_pause("You are trying to figure out how to locate where the car is for these keys so you can escape")
+	else:
+		print_pause("you find some car keys one the table and you are trying to figure where the car is located")
+		items.append("car keys")
 
-make a weapons list to randomly chose from
+	move_around(items,killer)
 
-make a attacker lis to randomly chose from 
+def library(items,killer):
+	print_pause("everyone you were with is gone and it is now 3 am you are puzzled trying to figure out what is going on you see car keys left on the table")
+	items.append("car keys")
+	move_around(items,killer)
 
-fix the input when user doesnt enter valid answer such as 1 or 2
+def library_exit(items,killer):
+	print_pause("you exit the library and go home")
+	print_pause("Congratulations you beat the game and escaped would you like to play again y for yes n for no")
+	play_again()
 
-"""
-#game over function asks user whther they want to play the game again
+def back_door(items,killer):
+	print_pause("You end up in the back porch of the house and the {} circles around the car and does not seem to see you there is a car infront of you".format(killer))
+	if "car keys" in items:
+		print_pause("you get in the car and drive off before it sees you")
+		print_pause("Congratulations you beat the game")
+		play_again()
+	else:
+		print_pause("you don't seem to have any car keys with you there is no oter way to get into the car")
+		move_around(items,killer)
+
+def move_around(items,killer):
+	print_pause("Enter the number for the room you want to go to")
+	room = input("1 front door of country side house\n"
+			"2 country side kitchen\n"
+			"3 library\n"
+			"4 library exit door\n"
+			"5 house back door\n")
+	if room == '1':
+		front_door(items,killer)
+	elif room == '2':
+		kitchen(items,killer)
+	elif room == '3':
+		library(items,killer)
+	elif room == '4':
+		library_exit(items,killer)
+	elif room == '5':
+		back_door(items,killer)
+	else:
+		move_around(items,killer)
+
+def play_again():
+	print_pause("would you like to play again y for yes and n for no")
+	choice = input()
+	if choice.lower() == "y":
+		play_game()
+	elif choice.lower() == "n":
+		print_pause("Thank you for playing come again!")
+	else:
+		play_again()
+
 def play_game():
-	print_pause("Game Over\n")
-	choice=input("Would you like to play again enter 1 for yes and 2 for no\n")
-
-	valid=True
-	while valid == True:
-		if int(choice)==1:
-			start()
-			valid=False
-		elif int(choice)==2:
-			print_pause("Thanks for playing come again")
-			valid=False
-		else:
-			choice=input("Please enter 1 for yes and 2 for no\n")
+	items = []
+	enemy = ["Black figure","Zombie", "Serial Killer"]
+	killer = random.choice(enemy)
+	intro()
+	move_around(items,killer)
 
 
-#function that starts off game 
-def start():
-	print_pause("You are studying for big math test in the library.\n")
-	print_pause("You leave the room to go to the restroom you endup in a country sidehouse kitchen it is dark\n")
-	print_pause("Enter 1 to go back to the door you came from.\n")
-	print_pause("Enter 2 to try to leave through the front door.\n")
-	print_pause("What would you like to do?\n")
-	choice= input("Please enter 1 or 2\n")
-
-	valid=True
-	while valid == True:
-		if int(choice) == 1:
-			library()
-			valid=False
-		elif int(choice) == 2:
-			front_door()
-			valid=False
-		else:
-			choice= input("Please enter 1 or 2\n")
-
-
-#start game
-start()
+play_game()
