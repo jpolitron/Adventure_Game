@@ -9,7 +9,8 @@ In this project I had to create a text style video game that would
 
 imported modules used
 
--time / used for time.sleep() inorder to create a delay between messages for dramatic effect.
--random / used for random.choice inorder to change the enemy everytime the game is played between the three black figure, serial killer, and zombie.
+-time: used for time.sleep() inorder to create a delay between messages for dramatic effect.
+
+-random: used for random.choice inorder to change the enemy everytime the game is played between the three black figure, serial killer, and zombie.
 
 also used a tool called pycodestyle that checks your python code against some of the style conventions in pep8.
